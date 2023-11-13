@@ -23,6 +23,7 @@ import com.example.finalquizapp.ui.theme.Category.CategoryListScreen
 import com.example.finalquizapp.ui.theme.Category.ImageCard
 import com.example.finalquizapp.ui.theme.FinalQuizAppTheme
 import com.example.finalquizapp.ui.theme.di.AppModule
+import com.example.finalquizapp.ui.theme.difficulty.DifficultyCardView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FinalQuizAppTheme {
-                CategoryListScreen()
+                DifficultyCardView()
 
             }
         }
