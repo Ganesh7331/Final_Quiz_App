@@ -80,7 +80,7 @@ fun CategoryListScreen(onButtonClick: (Int) -> Unit){
                             verticalArrangement = Arrangement.spacedBy(15.dp),
                             modifier = Modifier.weight(1f),
                             horizontalArrangement = Arrangement.spacedBy(15.dp)){
-                            items(categoreis){item->
+                            items(categoreis){ item->
 
                                 ImageCard(category =item, isSelected = item==selectedCategory, onSelected = {selectedCategory=it} )
                             }

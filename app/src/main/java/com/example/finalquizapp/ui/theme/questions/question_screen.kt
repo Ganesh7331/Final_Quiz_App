@@ -168,7 +168,7 @@ Spacer(modifier = Modifier.height(8.dp))
                                         if (currentQuestionIndex < questions.size - 1) {
                                             currentQuestionIndex++
 
-                                            if (currentQuestionIndex == 9) {
+                                            if (currentQuestionIndex == 10) {
                                                 showFinishScreen = true
                                             }
 

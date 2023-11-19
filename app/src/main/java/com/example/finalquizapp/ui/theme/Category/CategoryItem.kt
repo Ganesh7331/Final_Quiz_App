@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 
-fun ImageCard(category: Category,isSelected: Boolean,
+fun ImageCard(category: Category, isSelected: Boolean,
               onSelected: (Category) -> Unit) {
     Card(modifier = Modifier
         .width(180.dp)
