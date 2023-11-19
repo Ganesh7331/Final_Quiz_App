@@ -149,9 +149,13 @@ Spacer(modifier = Modifier.height(8.dp))
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
+
                                     if (option == currentQuestion.correctAnswer) {
                                         optionBackgroundColors[index] = Color.Green
                                         count++
+                                        if (currentQuestionIndex == 9) {
+                                            showFinishScreen = true
+                                        }
 
 
                                     } else {
@@ -160,6 +164,9 @@ Spacer(modifier = Modifier.height(8.dp))
                                         val correctIndex =
                                             currentQuestion.options.indexOf(currentQuestion.correctAnswer)
                                         optionBackgroundColors[correctIndex] = Color.Green
+                                        if (currentQuestionIndex == 9) {
+                                            showFinishScreen = true
+                                        }
                                     }
 
 
@@ -168,9 +175,7 @@ Spacer(modifier = Modifier.height(8.dp))
                                         if (currentQuestionIndex < questions.size - 1) {
                                             currentQuestionIndex++
 
-                                            if (currentQuestionIndex == 10) {
-                                                showFinishScreen = true
-                                            }
+
 
                                             optionBackgroundColors.fill(Color.White)
                                             timer = 15
