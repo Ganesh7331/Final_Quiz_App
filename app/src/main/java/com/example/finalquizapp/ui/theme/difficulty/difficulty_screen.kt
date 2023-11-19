@@ -1,19 +1,14 @@
 package com.example.finalquizapp.ui.theme.difficulty
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,18 +32,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.finalquizapp.ui.theme.Category.ImageCard
-import com.example.finalquizapp.ui.theme.Category.categoreis
 
 
+@SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DifficultyCardView() {
+fun DifficultyCardView(onButtonClick: (String) -> Unit) {
     var selectedDifficulty by remember { mutableStateOf("") }
-    val difficulties = listOf("Easy", "Medium", "Difficult")
+    val difficulties = listOf("easy", "medium", "hard")
+
+
 
 
     Scaffold(containerColor = Color(106, 90, 224),
+
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -117,39 +114,59 @@ fun DifficultyCardView() {
                                             255
                                         ) else Color(239, 238, 252),
 //            containerColor = Color(239,238,252), //Card background color
-                                        contentColor = if(selectedDifficulty==difficulty) Color.White else Color(
+                                        contentColor = if (selectedDifficulty == difficulty) Color.White else Color(
                                             106,
                                             90,
                                             224
                                         )  //Card content color,e.g.text
                                     ),
                                 ) {
-                                    Box (modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                                    Box(
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentAlignment = Alignment.Center
+                                    ) {
                                         Text(
                                             textAlign = TextAlign.Center,
-                                            text = difficulty,
-                                            modifier = Modifier.padding(16.dp), fontSize = 32.sp, fontWeight = FontWeight.Bold,
+                                            text = if(difficulty=="easy"){
+                                                                         "Easy"
+                                                                         }
+                                            else if(difficulty=="medium"){
+                                                                         "Medium"
+                                                                         }
+                                            else{
+                                                "Hard"
+                                                },
+                                            modifier = Modifier.padding(16.dp),
+                                            fontSize = 32.sp,
+                                            fontWeight = FontWeight.Bold,
                                             style = MaterialTheme.typography.bodyLarge
                                         )
                                     }
 
                                 }
                             }
-                            Button(
-                                onClick = { /*TODO*/ }, modifier = Modifier
-                                    .height(70.dp)
-                                    .fillMaxWidth()
-                                    .padding(8.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(106, 90, 224),
-                                    contentColor = Color.White
-                                ), shape = RoundedCornerShape(16.dp)
-                            ) {
-                                Text(text = "Next")
+
+                            Button(onClick = {
+                                if(selectedDifficulty!=null) {
+
+                                    onButtonClick(selectedDifficulty)
+                                }
+                                             }
+                            , modifier = Modifier
+                            .height(70.dp)
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color(106, 90, 224),
+                                        contentColor = Color.White
+                                    ), shape = RoundedCornerShape(16.dp)
+                                ) {
+                                    Text(text = "Next")
+
+                                }
 
                             }
 
-                        }
 
                     }
 
@@ -158,6 +175,7 @@ fun DifficultyCardView() {
             }
         }
     )
+
 }
 
 

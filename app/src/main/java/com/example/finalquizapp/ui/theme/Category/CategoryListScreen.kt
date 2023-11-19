@@ -41,13 +41,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.finalquizapp.ui.theme.difficulty.DifficultyCardView
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoryListScreen(){
+fun CategoryListScreen(onButtonClick: (Int) -> Unit){
 
     var selectedCategory by remember { mutableStateOf<Category?>(null) }
+
 
     Scaffold(containerColor = Color(106,90,224),
         topBar = {
@@ -91,18 +93,28 @@ fun CategoryListScreen(){
                                 ImageCard(category =item, isSelected = item==selectedCategory, onSelected = {selectedCategory=it} )
                             }
                         }
-                        Button(onClick = { /*TODO*/ }, modifier = Modifier
-                            .height(70.dp)
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(106,90,224),
-                                contentColor = Color.White), shape = RoundedCornerShape(16.dp)
-                        ) {
-                            Text(text = "Next")
 
+
+                            Button(
+                                onClick = { if(selectedCategory!=null) {
+
+                                    onButtonClick(selectedCategory!!.number)
+                                }
+
+                                }, modifier = Modifier
+                                    .height(70.dp)
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(106, 90, 224),
+                                    contentColor = Color.White
+                                ), shape = RoundedCornerShape(16.dp)
+                            ) {
+                                Text(text = "Next")
+
+                            }
                         }
-                    }
+
 
 
                 }
