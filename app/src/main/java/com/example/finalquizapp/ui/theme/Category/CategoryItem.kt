@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -17,21 +16,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.VerticalAlignmentLine
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.finalquizapp.R
-import java.time.format.TextStyle
+
 
 @Composable
 
@@ -44,8 +36,8 @@ fun ImageCard(category: Category,isSelected: Boolean,
         ,
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) Color(254, 142, 161, 255) else Color(239,238,252),
-//            containerColor = Color(239,238,252), //Card background color
-            contentColor = Color(106,90,224)  //Card content color,e.g.text
+//
+            contentColor = Color(106,90,224)
         ),
         shape = RoundedCornerShape(30.dp)
         ) {
@@ -62,14 +54,14 @@ fun ImageCard(category: Category,isSelected: Boolean,
 
                 ,
                 colors = CardDefaults.cardColors(
-                    containerColor = Color.Black, //Card background color
-                    contentColor = Color(106,90,224)  //Card content color,e.g.text
+                    containerColor = Color.Black,
+                    contentColor = Color(106,90,224)
                 ),
                 shape = RoundedCornerShape(36.dp),
 
             ) {
                 Image(
-                    painter = if (isSelected) painterResource(category.imageOnClick) else painterResource(category.image), //Card background color
+                    painter = if (isSelected) painterResource(category.imageOnClick) else painterResource(category.image),
 
 
                     contentDescription = null,
