@@ -1,5 +1,8 @@
 package com.example.finalquizapp.ui.theme.Result
 
+import android.content.ComponentName
+import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -32,7 +36,14 @@ import com.example.finalquizapp.ui.theme.Navigation.Navigation_Connection
 
 @Composable
 fun FinalScreen(count:Int) {
-    var showNavigationScreen by remember { mutableStateOf(false) }
+
+
+
+    val context = LocalContext.current
+    val packageManager: PackageManager = context.packageManager
+    val intent: Intent = packageManager.getLaunchIntentForPackage(context.packageName)!!
+    val componentName: ComponentName = intent.component!!
+    val restartIntent: Intent = Intent.makeRestartActivityTask(componentName)
 
 
     
@@ -64,7 +75,10 @@ fun FinalScreen(count:Int) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = {  showNavigationScreen=true}, modifier = Modifier.padding(16.dp), colors = ButtonDefaults.buttonColors(
+        Button(onClick ={
+            context.startActivity(restartIntent)
+            Runtime.getRuntime().exit(0)
+        }, modifier = Modifier.padding(16.dp), colors = ButtonDefaults.buttonColors(
             containerColor = Color.White,
             contentColor = Color(106, 90, 224)
         )) {
@@ -75,7 +89,5 @@ fun FinalScreen(count:Int) {
 
         
     }
-    if(showNavigationScreen){
-        Navigation_Connection()
-    }
+
 }

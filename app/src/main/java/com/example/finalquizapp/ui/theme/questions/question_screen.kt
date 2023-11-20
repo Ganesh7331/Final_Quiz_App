@@ -48,12 +48,20 @@ fun question_screen(quizs: List<Quiz>) {
     var count by remember { mutableIntStateOf(0) }
     var showFinishScreen by remember{ mutableStateOf(false) }
 
+
+
+
+
+
+
     for(i in quizs.indices){
                     var question= Question(quizs[i].question,(quizs[i].incorrect_answers+quizs[i].correct_answer).shuffled(),quizs[i].correct_answer)
 
         questions.add(question)
 
                 }
+
+
 
     Log.e("HiGanesh", questions.toString() )
     var currentQuestionIndex by remember { mutableStateOf(0) }
@@ -131,6 +139,11 @@ fun question_screen(quizs: List<Quiz>) {
                     137,
                     255
                 ), fontWeight = FontWeight.Bold, fontSize = 18.sp)
+
+                currentQuestion.question = currentQuestion.question.replace("&quot;", "'" )
+                currentQuestion.question = currentQuestion.question.replace("&#039;", "'" )
+                currentQuestion.question = currentQuestion.question.replace("&amp;", "&" )
+                currentQuestion.question = currentQuestion.question.replace("&auml;", "ä" )
 
                 Text(text = currentQuestion.question, fontSize = 22.sp, fontWeight = FontWeight.SemiBold)
 Spacer(modifier = Modifier.height(8.dp))
