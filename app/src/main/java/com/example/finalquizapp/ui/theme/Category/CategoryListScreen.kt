@@ -75,7 +75,7 @@ fun CategoryListScreen(onButtonClick: (Int) -> Unit){
                     )
                     , shape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp, bottomEnd = 0.dp, bottomStart = 0.dp)
                     ){
-                        LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 150.dp),
+                        LazyVerticalGrid(columns = GridCells.Fixed(2),
                             contentPadding = PaddingValues(18.dp),
                             verticalArrangement = Arrangement.spacedBy(15.dp),
                             modifier = Modifier.weight(1f),
