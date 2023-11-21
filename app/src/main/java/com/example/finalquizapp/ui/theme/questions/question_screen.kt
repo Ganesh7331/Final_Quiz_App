@@ -82,6 +82,9 @@ fun question_screen(quizs: List<Quiz>) {
         if (timer == 0) {
             val correctIndex = currentQuestion.options.indexOf(currentQuestion.correctAnswer)
             optionBackgroundColors[correctIndex] = Color.Green
+            if (currentQuestionIndex == 9) {
+                showFinishScreen = true
+            }
 
             delay(1000L)
             if (currentQuestionIndex < questions.size - 1) {
@@ -187,9 +190,7 @@ Spacer(modifier = Modifier.height(8.dp))
                                         delay(1500L)
                                         if (currentQuestionIndex < questions.size - 1) {
                                             currentQuestionIndex++
-                                            if (currentQuestionIndex == 9) {
-                                                showFinishScreen = true
-                                            }
+
 
 
                                             optionBackgroundColors.fill(Color.White)
