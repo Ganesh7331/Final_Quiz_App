@@ -187,13 +187,16 @@ Spacer(modifier = Modifier.height(8.dp))
                                         delay(1500L)
                                         if (currentQuestionIndex < questions.size - 1) {
                                             currentQuestionIndex++
-
+                                            if (currentQuestionIndex == 9) {
+                                                showFinishScreen = true
+                                            }
 
 
                                             optionBackgroundColors.fill(Color.White)
                                             timer = 15
                                         }
                                     }
+
                                 }
                                 .background(optionBackgroundColors[index])
                                 .padding(16.dp)
