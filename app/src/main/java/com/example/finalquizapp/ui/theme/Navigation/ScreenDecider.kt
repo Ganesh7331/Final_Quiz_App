@@ -5,29 +5,33 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
+import androidx.navigation.NavController
 import com.example.finalquizapp.ui.theme.questions.CircularProgressIndicator1
 import com.example.finalquizapp.ui.theme.questions.MainViewModel
 import com.example.finalquizapp.ui.theme.questions.MainViewModelFactory
 import com.example.finalquizapp.ui.theme.questions.question_screen
 
 @Composable
-fun ScreenDecider(number:Int,difficulty:String) {
+fun ScreenDecider(number: Int, difficulty: String) {
+    val context= LocalContext.current
     val questionViewModel: MainViewModel = viewModel(factory = MainViewModelFactory {
         initializer {
-            MainViewModel(number, difficulty)
+            MainViewModel(number, difficulty,context)
         }
     })
 
     val viewstate by questionViewModel.questionsState
 
-    Box(modifier = Modifier.fillMaxSize()){
-        when{
-            viewstate.loading ->{
+    Box(modifier = Modifier.fillMaxSize()) {
+        when {
+            viewstate.loading -> {
                 CircularProgressIndicator1()
             }
-            else ->{
+
+            else -> {
                 question_screen(viewstate.list)
             }
         }

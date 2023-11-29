@@ -8,9 +8,9 @@ interface QuizApi {
 
     @GET("/api.php")
     suspend fun getQuestion(
-        @Query("amount") amount:Int,
+        @Query("amount") amount: Int,
         @Query("category") category: Int,
-        @Query("difficulty") difficulty:String,
-        @Query("type") type:String
-    ):Response<QuizData>
+        @Query("difficulty") difficulty: String,
+        @Query("type") type: String
+    ): Response<QuizData>
 }

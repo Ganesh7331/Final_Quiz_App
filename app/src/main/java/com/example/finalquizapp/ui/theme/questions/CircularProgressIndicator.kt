@@ -10,11 +10,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun CircularProgressIndicator1(){
+fun CircularProgressIndicator1() {
 
-        Box(modifier = Modifier.fillMaxSize().background(Color.White), contentAlignment = Alignment.Center,) {
-            CircularProgressIndicator()
-        }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
+        contentAlignment = Alignment.Center,
+    ) {
+        CircularProgressIndicator()
+    }
 
 
 }

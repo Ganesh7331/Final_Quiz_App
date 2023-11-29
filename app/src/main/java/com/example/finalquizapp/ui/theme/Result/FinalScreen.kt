@@ -1,6 +1,8 @@
 package com.example.finalquizapp.ui.theme.Result
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
+import android.content.ContentProvider
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.compose.foundation.Image
@@ -30,16 +32,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.finalquizapp.R
-import com.example.finalquizapp.ui.theme.Navigation.Navigation_Connection
+import com.example.finalquizapp.ui.theme.History.HistoryViewModel
+import com.example.finalquizapp.ui.theme.SharedState
+import com.example.finalquizapp.ui.theme.questions.MainViewModel
+
+//import com.example.finalquizapp.ui.theme.Navigation.Navigation_Connection
 
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun FinalScreen(count:Int) {
+    val context= LocalContext.current
+    val viewModel:HistoryViewModel= hiltViewModel()
+
+    viewModel.addItemToHistory(count,SharedState.historyList.value.name)
 
 
 
-    val context = LocalContext.current
+
     val packageManager: PackageManager = context.packageManager
     val intent: Intent = packageManager.getLaunchIntentForPackage(context.packageName)!!
     val componentName: ComponentName = intent.component!!

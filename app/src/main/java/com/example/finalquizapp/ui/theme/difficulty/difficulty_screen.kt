@@ -1,6 +1,7 @@
 package com.example.finalquizapp.ui.theme.difficulty
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,9 +38,10 @@ import androidx.compose.ui.unit.sp
 @SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DifficultyCardView(onButtonClick: (String) -> Unit) {
+fun DifficultyCardView(number: Int, NavigatetoProgressBar: (String, Int) -> Unit) {
     var selectedDifficulty by remember { mutableStateOf("") }
     val difficulties = listOf("easy", "medium", "hard")
+
 
 
 
@@ -125,15 +127,13 @@ fun DifficultyCardView(onButtonClick: (String) -> Unit) {
                                     ) {
                                         Text(
                                             textAlign = TextAlign.Center,
-                                            text = if(difficulty=="easy"){
-                                                                         "Easy"
-                                                                         }
-                                            else if(difficulty=="medium"){
-                                                                         "Medium"
-                                                                         }
-                                            else{
+                                            text = if (difficulty == "easy") {
+                                                "Easy"
+                                            } else if (difficulty == "medium") {
+                                                "Medium"
+                                            } else {
                                                 "Hard"
-                                                },
+                                            },
                                             modifier = Modifier.padding(16.dp),
                                             fontSize = 32.sp,
                                             fontWeight = FontWeight.Bold,
@@ -145,25 +145,24 @@ fun DifficultyCardView(onButtonClick: (String) -> Unit) {
                             }
 
                             Button(onClick = {
-                                if(selectedDifficulty!=null) {
+                                if (selectedDifficulty != null) {
 
-                                    onButtonClick(selectedDifficulty)
+                                    NavigatetoProgressBar(selectedDifficulty, number)
                                 }
-                                             }
-                            , modifier = Modifier
-                            .height(70.dp)
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color(106, 90, 224),
-                                        contentColor = Color.White
-                                    ), shape = RoundedCornerShape(16.dp)
-                                ) {
-                                    Text(text = "Next")
-
-                                }
+                            }, modifier = Modifier
+                                .height(70.dp)
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(106, 90, 224),
+                                    contentColor = Color.White
+                                ), shape = RoundedCornerShape(16.dp)
+                            ) {
+                                Text(text = "Next")
 
                             }
+
+                        }
 
 
                     }

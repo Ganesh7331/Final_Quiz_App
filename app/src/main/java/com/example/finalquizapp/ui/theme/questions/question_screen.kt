@@ -31,11 +31,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.finalquizapp.ui.theme.Api.Quiz
 import com.example.finalquizapp.ui.theme.Result.FinalScreen
 import kotlinx.coroutines.delay
@@ -46,7 +49,7 @@ import kotlinx.coroutines.launch
 fun question_screen(quizs: List<Quiz>) {
     var questions: MutableList<Question> = mutableListOf()
     var count by remember { mutableIntStateOf(0) }
-    var showFinishScreen by remember{ mutableStateOf(false) }
+    var showFinishScreen by remember { mutableStateOf(false) }
 
 
 
@@ -54,16 +57,23 @@ fun question_screen(quizs: List<Quiz>) {
 
 
 
-    for(i in quizs.indices){
-                    var question= Question(quizs[i].question,(quizs[i].incorrect_answers+quizs[i].correct_answer).shuffled(),quizs[i].correct_answer)
+
+
+
+    for (i in quizs.indices) {
+        var question = Question(
+            quizs[i].question,
+            (quizs[i].incorrect_answers + quizs[i].correct_answer).toList().shuffled(),
+            quizs[i].correct_answer
+        )
 
         questions.add(question)
 
-                }
+    }
 
 
 
-    Log.e("HiGanesh", questions.toString() )
+    Log.e("HiGanesh", questions.toString())
     var currentQuestionIndex by remember { mutableStateOf(0) }
     val currentQuestion = questions[currentQuestionIndex]
     val coroutineScope = rememberCoroutineScope()
@@ -111,54 +121,73 @@ fun question_screen(quizs: List<Quiz>) {
             ),
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
         ) {
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 8.dp, end = 8.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 8.dp, end = 8.dp)
+            ) {
 
                 Spacer(modifier = Modifier.height(30.dp))
-                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
-                    Box( modifier = Modifier
-                        .width(65.dp)
-                        .height(65.dp)
-                        .background(
-                            color = Color(
-                                254,
-                                142,
-                                161,
-                                255
+                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    Box(
+                        modifier = Modifier
+                            .width(65.dp)
+                            .height(65.dp)
+                            .background(
+                                color = Color(
+                                    254,
+                                    142,
+                                    161,
+                                    255
+                                ),
+                                shape = CircleShape
                             ),
-                            shape = CircleShape
-                        ),contentAlignment = Alignment.Center,) {
-                        Text(text = "$timer", textAlign = TextAlign.Center, fontSize = 26.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = "$timer",
+                            textAlign = TextAlign.Center,
+                            fontSize = 26.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.White
+                        )
                     }
                 }
 
 
                 Spacer(modifier = Modifier.height(50.dp))
 
-                Text(text= "QUESTION ${currentQuestionIndex+1} OF 10", color = Color(
-                    138,
-                    137,
-                    137,
-                    255
-                ), fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(
+                    text = "QUESTION ${currentQuestionIndex + 1} OF 10", color = Color(
+                        138,
+                        137,
+                        137,
+                        255
+                    ), fontWeight = FontWeight.Bold, fontSize = 18.sp
+                )
 
-                currentQuestion.question = currentQuestion.question.replace("&quot;", "'" )
-                currentQuestion.question = currentQuestion.question.replace("&#039;", "'" )
-                currentQuestion.question = currentQuestion.question.replace("&amp;", "&" )
-                currentQuestion.question = currentQuestion.question.replace("&auml;", "ä" )
+//                currentQuestion.question = currentQuestion.question.replace("&quot;", "'" )
+//                currentQuestion.question = currentQuestion.question.replace("&#039;", "'" )
+//                currentQuestion.question = currentQuestion.question.replace("&amp;", "&" )
+//                currentQuestion.question = currentQuestion.question.replace("&auml;", "ä" )
 
-                Text(text = currentQuestion.question, fontSize = 22.sp, fontWeight = FontWeight.SemiBold)
-Spacer(modifier = Modifier.height(8.dp))
+                currentQuestion.question = cleanJson(currentQuestion.question)
+
+                Text(
+                    text = currentQuestion.question,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
 
                 currentQuestion.options.forEachIndexed { index, option ->
-                    
-                    
-                    
+                    var cleanoption = option
+                    cleanoption = cleanJson(cleanoption)
+
                     Spacer(modifier = Modifier.height(16.dp))
                     OutlinedCard(modifier = Modifier.fillMaxWidth()) {
                         Text(
-                            text = option,
+                            text = cleanoption,
                             style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold),
 
 
@@ -203,7 +232,7 @@ Spacer(modifier = Modifier.height(8.dp))
                                 .padding(16.dp)
                                 .padding(start = 16.dp),
 
-                        )
+                            )
                     }
 
                 }
@@ -211,9 +240,21 @@ Spacer(modifier = Modifier.height(8.dp))
         }
 
     }
-    if(showFinishScreen){
+    if (showFinishScreen) {
         FinalScreen(count = count)
     }
+}
+
+
+fun cleanJson(jsonString: String): String {
+    return jsonString
+        .replace("&quot;", "\"")
+        .replace("&amp;", "&")
+        .replace("&lt;", "<")
+        .replace("&gt;", ">")
+        .replace("&apos;", "'")
+        .replace("&auml;", "ä")
+        .replace("&#039;", "'")
 }
 
 

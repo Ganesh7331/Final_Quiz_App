@@ -2,7 +2,7 @@ package com.example.finalquizapp.ui.theme.Category
 
 import com.example.finalquizapp.R
 
-val categoreis= listOf<Category>(
+val categoreis= listOf(
     Category("General Knowledge",9, R.drawable.general_knowledge,R.drawable.general_knowledge_onclick),
     Category("Books",10,R.drawable.book,R.drawable.book_onclick),
     Category("Film",11,R.drawable.film,R.drawable.film_onclick),
